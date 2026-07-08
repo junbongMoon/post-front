@@ -1,4 +1,4 @@
-function PostCard({ post }) {
+function PostCard({ post, onClick }) {
     const formatDate = (dateStr) => {
         return new Date(dateStr).toLocaleDateString('ko-KR', {
             year: 'numeric',
@@ -12,6 +12,7 @@ function PostCard({ post }) {
             className="post-card"
             role="button" // 접근성: 이 div가 버튼 역할임을 알림
             tabIndex={0} // 접근성: 키보드 Tab으로 포커스 가능
+            onClick={onClick}
         >
             <h3 className="post-title">{post.title}</h3>
 
