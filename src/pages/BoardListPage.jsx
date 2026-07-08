@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import PostCard from '../components/PostCard';
 import api from '../api/axios';
 import SearchBar from '../components/SearchBar';
@@ -12,6 +14,8 @@ const BoardListPage = () => {
     const [search, setSearch] = useState(''); // backend를 호출 했던 검색어
     const [tempSearch, setTempSearch] = useState(''); // 아직 입력중인 검색어(backend 호출x)
     const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
+
+    const navigate = useNavigate(); // 페이지 이동을 할 수있도록 하는 react-router-dom의 훅
 
     const fetchPosts = async () => {
         setLoading(true); // 로딩 시작
@@ -82,6 +86,7 @@ const BoardListPage = () => {
                                 <PostCard
                                     key={post.id} // key: React가 목록 항목을 구분할 때 사용 (필수!)
                                     post={post}
+                                    onClick={() => navigate(`/posts/${post.id}`)}
                                 />
                             ))}
                         </div>
