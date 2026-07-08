@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import BoardListPage from './pages/BoardListPage';
+import BoardDetailPage from './pages/BoardDetailPage';
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                 {/* 현재 URL에 맞는 Route 하나만 렌더링 되도록 */}
                 <Routes>
                     <Route path="/" element={<BoardListPage />} />
+                    <Route path="/posts/:id" element={<BoardDetailPage />} />
                     <Route />
                     <Route />
                     <Route />
