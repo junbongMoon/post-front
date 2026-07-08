@@ -15,7 +15,7 @@ const BoardListPage = () => {
     const [tempSearch, setTempSearch] = useState(''); // 아직 입력중인 검색어(backend 호출x)
     const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
 
-    const navigate = useNavigate(); // 페이지 이동을 할 수있도록 하는 react-router-dom의 훅
+    const navigate = useNavigate(); // 페이지 이동을 할 수 있도록 하는 react-router-dom의 훅
 
     const fetchPosts = async () => {
         setLoading(true); // 로딩 시작
