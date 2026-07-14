@@ -13,7 +13,7 @@ const BoardListPage = () => {
     const [page, setPage] = useState(1); // 현재 페이지 번호
     const [search, setSearch] = useState(''); // backend를 호출 했던 검색어
     const [tempSearch, setTempSearch] = useState(''); // 아직 입력중인 검색어(backend 호출x)
-    const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
+    const [pageInfo, setPageInfo] = useState(null); // 전체 페이지 수
 
     const navigate = useNavigate(); // 페이지 이동을 할 수 있도록 하는 react-router-dom의 훅
 
@@ -29,8 +29,12 @@ const BoardListPage = () => {
                 },
             });
 
+            console.log(response.data.page_info);
+
             setPosts(response.data.posts);
-            setTotalPages(response.data.page_info.total_pages);
+            setPageInfo(response.data.page_info);
+
+            console.log(response.data.page_info);
         } catch (err) {
             setError('게시글을 불러는데 실패했습니다..');
             console.log(err);
@@ -75,7 +79,7 @@ const BoardListPage = () => {
             {error && <div className="error-msg"> {error} </div>}
 
             {/* 게시글 목록 */}
-            {!loading && !error && (
+            {!loading && !error && posts && (
                 <>
                     {posts.length === 0 ? (
                         <div className="empty">게시글이 없습니다.</div>
@@ -94,11 +98,9 @@ const BoardListPage = () => {
                 </>
             )}
             {/* 페이지네이션 */}
-            <Pagenation
-                page={page}
-                totalPages={totalPages}
-                onPageChange={(newPage) => setPage(newPage)}
-            />
+            {pageInfo && (
+                <Pagenation pageInfo={pageInfo} onPageChange={(newPage) => setPage(newPage)} />
+            )}
         </div>
     );
 };
