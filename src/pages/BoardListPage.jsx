@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PostCard from '../components/PostCard';
@@ -17,7 +17,12 @@ const BoardListPage = () => {
 
     const navigate = useNavigate(); // 페이지 이동을 할 수 있도록 하는 react-router-dom의 훅
 
-    const fetchPosts = async () => {
+    const fetchPosts = useCallback(async () => {
+        // page 혹은 search가 바뀔 때만 새 함수 생성,
+        // 그 외에는 이전에 만들어졌던 함수 재사용
+
+        // useEffect의 의존성 배열에 함수가 들어간다. => 그 함수를 useCallback!
+
         setLoading(true); // 로딩 시작
         setError(null); // 이전 에러 초기화
         try {
@@ -41,7 +46,7 @@ const BoardListPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [page, search]);
 
     // page(페이지 번호), search(검색어)가 바뀔 때마다 호출 되도록
     // 최초에 컴포넌트가 렌더링 될 때 page 스테이트 값이 1로 초기화 되면서
